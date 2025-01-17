@@ -1,6 +1,7 @@
 # Team Members
 
 - [Jeremy Diamond]
+- [Enoch Balbuena]
 
 # Introduction
 
