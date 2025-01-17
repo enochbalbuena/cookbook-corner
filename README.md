@@ -2,6 +2,7 @@
 
 - [Jeremy Diamond]
 - [Enoch Balbuena]
+- [Jacob Sanchez Bejarano]
 
 # Introduction
 
