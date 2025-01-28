@@ -138,7 +138,6 @@ C:\Users\iamdi\RiderProjects\CookbookCorner\CookbookCorner\obj\Debug\net8.0\Cook
 C:\Users\iamdi\RiderProjects\CookbookCorner\CookbookCorner\obj\Debug\net8.0\ref\CookbookCorner.dll
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\appsettings.json
-C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\Data\app.db
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\CookbookCorner.staticwebassets.runtime.json
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\CookbookCorner.exe
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\CookbookCorner.deps.json
