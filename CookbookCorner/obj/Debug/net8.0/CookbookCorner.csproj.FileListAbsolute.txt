@@ -274,3 +274,4 @@ C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\obj\Debug\net8.0\CookbookCorner.pdb
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\obj\Debug\net8.0\CookbookCorner.genruntimeconfig.cache
 C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\obj\Debug\net8.0\ref\CookbookCorner.dll
+C:\Users\iamdi\Documents\School\CSE325_Repos\InfanateLoopersRepo\CookbookCorner\bin\Debug\net8.0\Data\app.db
