@@ -1,0 +1,40 @@
+.darker-border-checkbox.form-check-input {
+    border-color: #929292;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #070707;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.nav-tab {
+    background-color: #CC5500; /* Burnt Orange */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin: 0 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: 2px solid #CC5500;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tab:hover {
+    background-color: #FF7043; /* Lighter Burnt Orange */
+    transform: scale(1.05);
+    border-color: #FF7043;
+}
+
+.nav-tab img {
+    margin-right: 10px;
+}
