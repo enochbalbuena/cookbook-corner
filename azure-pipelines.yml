@@ -1,44 +1,20 @@
-# ASP.NET Core (.NET Framework)
-# CI/CD pipeline for deploying to Azure Web App
-
 trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '6.x'  # Change to match your .NET version
+- checkout: self
 
-- task: DotNetCoreCLI@2
-  displayName: 'Restore NuGet Packages'
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
+- script: |
+    git config --global user.email "enxch@icloud.com"
+    git config --global user.name "enochbalbuena"
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build the Project'
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration Release'
+    # Ensure GitHub remote is not added twice
+    git remote remove github || true
+    git remote add github https://enochbalbuena:${{ secrets.GITHUB_PAT }}@github.com/enochbalbuena/cookbook-corner.git
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish the Project'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: true
-
-- task: AzureWebApp@1
-  displayName: 'Deploy to Azure Web App'
-  inputs:
-    appType: 'webApp'
-    azureSubscription: ''  # Leave empty, not needed for this method
-    appName: 'cookbookcorner'  # ✅ Replace with your Azure Web App Name
-    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    publishProfile: $(AZURE_PUBLISH_PROFILE)  # ✅ Uses the Secure Variable
+    # Push to GitHub
+    git push --mirror github
+  displayName: 'Sync Azure DevOps to GitHub'
