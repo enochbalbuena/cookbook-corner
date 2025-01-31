@@ -1,0 +1,51 @@
+# ASP.NET Core (.NET Framework)
+# CI/CD pipeline for deploying to Azure Web App
+
+trigger:
+- main  # Adjust if your main branch has a different name
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+# ✅ Install NuGet (for dependencies)
+- task: NuGetToolInstaller@1
+
+# ✅ Restore NuGet Packages
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+# ✅ Build the Project
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(Build.ArtifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# ✅ Run Unit Tests (Optional - Remove if you don’t have tests)
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# ✅ Publish Build Artifacts (Prepares the package for deployment)
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
+
+# ✅ Deploy to Azure Web App
+- task: AzureWebApp@1
+  displayName: 'Deploy to Azure Web App'
+  inputs:
+    azureSubscription: 'Azure subscription 1'
+    appName: 'cookbookcorner'
+    package: '$(Build.ArtifactStagingDirectory)/WebApp.zip'
