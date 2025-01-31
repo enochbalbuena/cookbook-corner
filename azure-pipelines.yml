@@ -13,8 +13,10 @@ steps:
 
     # Ensure GitHub remote is not added twice
     git remote remove github || true
-    git remote add github https://enochbalbuena:${{ secrets.GITHUB_PAT }}@github.com/enochbalbuena/cookbook-corner.git
+    git remote add github https://enochbalbuena:$(GITHUB_PAT)@github.com/enochbalbuena/cookbook-corner.git
 
     # Push to GitHub
     git push --mirror github
   displayName: 'Sync Azure DevOps to GitHub'
+  env:
+    GITHUB_PAT: $(GITHUB_PAT)
