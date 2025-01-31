@@ -2,50 +2,43 @@
 # CI/CD pipeline for deploying to Azure Web App
 
 trigger:
-- main  # Adjust if your main branch has a different name
+- main
 
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
 steps:
-# ✅ Install NuGet (for dependencies)
-- task: NuGetToolInstaller@1
-
-# ✅ Restore NuGet Packages
-- task: NuGetCommand@2
+- task: UseDotNet@2
   inputs:
-    restoreSolution: '$(solution)'
+    packageType: 'sdk'
+    version: '6.x'  # Change to match your .NET version
 
-# ✅ Build the Project
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: 'Restore NuGet Packages'
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(Build.ArtifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'restore'
+    projects: '**/*.csproj'
 
-# ✅ Run Unit Tests (Optional - Remove if you don’t have tests)
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: 'Build the Project'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration Release'
 
-# ✅ Publish Build Artifacts (Prepares the package for deployment)
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
+- task: DotNetCoreCLI@2
+  displayName: 'Publish the Project'
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'drop'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
 
-# ✅ Deploy to Azure Web App
 - task: AzureWebApp@1
   displayName: 'Deploy to Azure Web App'
   inputs:
-    azureSubscription: 'Azure subscription 1'
-    appName: 'cookbookcorner'
-    package: '$(Build.ArtifactStagingDirectory)/WebApp.zip'
+    appType: 'webApp'
+    azureSubscription: ''  # Leave empty, not needed for this method
+    appName: 'cookbookcorner'  # ✅ Replace with your Azure Web App Name
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    publishProfile: $(AZURE_PUBLISH_PROFILE)  # ✅ Uses the Secure Variable
